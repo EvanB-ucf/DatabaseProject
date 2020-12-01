@@ -12,17 +12,9 @@ var db = require("../server") // reference to server
  * @description Adds a new User to the table USERS
 */
 export function createUser(username, password) {
-    db.connection.connect() //connects us to database
+  var sql = "INSERT INTO USERS (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
     
-    var sql = "INSERT INTO USERS (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
-    
-    connection.query(sql, function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log('added user successfully')
-      })
-    
-    db.connection.end() // ends connection
+  return customSQL(sql);
 }
 
 /** 
@@ -32,21 +24,9 @@ export function createUser(username, password) {
  * @description Finds Users with the given username
 */
 export function findUser(username) {
-    db.connection.connect() //connects us to database
+  var sql = "SELECT * FROM USERS WHERE username=\'"+username+"\'";
     
-    var sql = "SELECT * FROM USERS WHERE username=\'"+username+"\'";
-    
-    connection.query(sql, function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log('Succesfully grabbed user '+rows[0].username)  
-      })
-    
-    db.connection.end() // ends connection
-    
-    if (rows == NULL) return -1;
-    
-    return rows;
+  return customSQL(sql);
 }
 
 //------------//
@@ -63,18 +43,10 @@ export function findUser(username) {
  * @param {string} password Password of new Super Admin
  * @description Adds a new Super Admin to the table SUPERADMINS
 */
-export function createSuperAdmin(username, password) {
-    db.connection.connect() //connects us to database
+export function createSuperAdmin(username, password) { 
+  var sql = "INSERT INTO SUPERADMIN (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
     
-    var sql = "INSERT INTO SUPERADMIN (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
-    
-    connection.query(sql, function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log('added super admin successfully')
-      })
-    
-    db.connection.end() // ends connection
+  return customSQL(sql);
 }
 
 /** 
@@ -84,19 +56,9 @@ export function createSuperAdmin(username, password) {
  * @description Finds Super Admins with the given username
 */
 export function findSuperAdmin(username) {
-    db.connection.connect() //connects us to database
+  var sql = "SELECT * FROM SUPERADMIN WHERE username=\'"+username+"\'";
     
-    var sql = "SELECT * FROM SUPERADMIN WHERE username=\'"+username+"\'";
-    
-    connection.query(sql, function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log('Succesfully grabbed Super Admin '+rows[0].username)  
-      })
-    
-    db.connection.end() // ends connection
-    
-    return rows;
+  return customSQL(sql);
 }
 
 //------------------//
@@ -104,9 +66,11 @@ export function findSuperAdmin(username) {
 //------------------//
 
 
-/** Executes custom sql request 
- *  Returns -1 if rows = NULL
- *  Returns rows if rows != NULL
+/** 
+ * @function customSQL
+ * @param {string} sql Line of sql you wish to run
+ * @returns {array} Array of rows pulled from sql command, if any
+ * @description Runs any custom line of sql against the database
 */
 export function customSQL(sql) {
     db.connection.connect() //connects us to database
