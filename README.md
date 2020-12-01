@@ -21,6 +21,10 @@ Just make sure that it all goes in the /web folder and document how to get it ru
 2. If running this for the first time, then Run 'npm install'
 3. Run 'node server.js'
 
+### NOTE**
+This is not needed since server.js merely only provides a connection to the AWS backend.
+All functions handling sql queries are stored in services.js in the services folder. Current documentation for this code can be found at /api/docs/global.html
+
 ## To Do
 - Add functionality to web pages
 - Create functions that handle sql queries in the api
