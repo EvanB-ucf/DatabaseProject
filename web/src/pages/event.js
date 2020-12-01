@@ -1,9 +1,9 @@
 import React from "react";
 
 export default class Event extends React.Component {
-    constructor(props) {
+    // constructor(props) {
 
-     }
+    //  }
 
     render() {
         // PUT HTML WITHIN RETURN
