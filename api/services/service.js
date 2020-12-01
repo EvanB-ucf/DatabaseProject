@@ -13,7 +13,8 @@ var db = require("../server") // reference to server
 */
 export function createUser(username, password) {
   var sql = "INSERT INTO USERS (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
-    
+  
+  console.log("sql command is trying to create a user");
   return customSQL(sql);
 }
 
@@ -25,7 +26,8 @@ export function createUser(username, password) {
 */
 export function findUser(username) {
   var sql = "SELECT username FROM USERS WHERE username=\'"+username+"\'";
-    
+  
+  console.log("sql command is trying to find users with "+username+" as their username");
   return customSQL(sql);
 }
 
@@ -39,6 +41,7 @@ export function findUser(username) {
 export function login(username, password){
   var sql = "SELECT username FROM USERS WHERE username=\'"+username+"\' AND password=\'"+password+"\'"
 
+  console.log("sql command is trying to verify the user's credentials");
   if (username == customSQL(sql)[o].username){
     console.log("credentials are valid");
     return true;
@@ -64,7 +67,8 @@ export function login(username, password){
 */
 export function createSuperAdmin(username, password) { 
   var sql = "INSERT INTO SUPERADMIN (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
-    
+  
+  console.log("sql command is trying to create a super admin");  
   return customSQL(sql);
 }
 
@@ -76,7 +80,8 @@ export function createSuperAdmin(username, password) {
 */
 export function findSuperAdmin(username) {
   var sql = "SELECT * FROM SUPERADMIN WHERE username=\'"+username+"\'";
-    
+  
+  console.log("sql command is trying to find super admins with "+username+" as their username");
   return customSQL(sql);
 }
 
@@ -98,6 +103,7 @@ export function findSuperAdmin(username) {
 export function createLocation(city, street_address, state) {
   var sql = "INSERT INTO LOCATION (city, street_address, state) VALUES (\'"+city+"\',\'"+street_address+"\',\'"+state+"\')";
     
+  console.log("sql command is trying to create a location");
   return customSQL(sql);
 }
 
@@ -116,6 +122,7 @@ export function findLocation(searchBy, values){
   }
   sql += searchBy[0]+"\'=\'"+values[0]+"\'";
   
+  console.log("sql command is trying to find locations with special filters");
   return customSQL(sql)
 }
 
@@ -127,7 +134,8 @@ export function findLocation(searchBy, values){
 */
 export function findLocationByState(state) {
   var sql = "SELECT * FROM LOCATION WHERE state=\'"+state+"\'";
-    
+  
+  console.log("sql command is trying to find locations with "+state+" as its state");
   return customSQL(sql);
 }
 
@@ -140,6 +148,7 @@ export function findLocationByState(state) {
 export function findLocationByCity(city) {
   var sql = "SELECT * FROM LOCATION WHERE city=\'"+city+"\'";
     
+  console.log("sql command is trying to find locations with "+city+" as its city");
   return customSQL(sql);
 }
 
@@ -151,7 +160,8 @@ export function findLocationByCity(city) {
 */
 export function findLocationByStreet(street_address) {
   var sql = "SELECT * FROM LOCATION WHERE street_address=\'"+street_address+"\'";
-    
+  
+  console.log("sql command is trying to find locations with "+street_address+" as its street_address");
   return customSQL(sql);
 }
 
@@ -177,7 +187,8 @@ export function findLocationByStreet(street_address) {
  */
 export function createEvent(adminID, locationID, name, category, description, url, start_date, end_date){
   var sql = "INSERT INTO EVENTS (adminID, locationID, name, category, description, url, start_date, end_date) VALUES (\'"+adminID+"\',\'"+locationID+"\',\'"+name+"\',\'"+category+"\',\'"+description+"\',\'"+url+"\',\'"+start_date+"\',\'"+end_date+"\')";
-    
+  
+  console.log("sql command is trying to create an event");
   return customSQL(sql);
 }
 
@@ -196,6 +207,7 @@ export function findEvent(searchBy, values){
   }
   sql += searchBy[0]+"\'=\'"+values[0]+"\'";
   
+  console.log("sql command is trying to find events with special filters");
   return customSQL(sql)
 }
 
@@ -207,7 +219,8 @@ export function findEvent(searchBy, values){
 */
 export function findEventByName(name){
   var sql = "SELECT * FROM EVENTS WHERE name=\'"+name+"\'";
-    
+  
+  console.log("sql command is trying to find events with "+name+" as its name");
   return customSQL(sql);
 }
 
@@ -219,7 +232,8 @@ export function findEventByName(name){
 */
 export function findEventByCategory(category){
   var sql = "SELECT * FROM EVENTS WHERE category=\'"+category+"\'";
-    
+  
+  console.log("sql command is trying to find events with "+category+" as its category");
   return customSQL(sql);
 }
 
@@ -231,7 +245,8 @@ export function findEventByCategory(category){
 */
 export function findEventByStartDate(start_date){
   var sql = "SELECT * FROM EVENTS WHERE start_date=\'"+start_date+"\'";
-    
+  
+  console.log("sql command is trying to find events with "+start_date+" as its start_date");
   return customSQL(sql);
 }
 
@@ -243,7 +258,8 @@ export function findEventByStartDate(start_date){
 */
 export function findEventByEndDate(end_date){
   var sql = "SELECT * FROM EVENTS WHERE end_date=\'"+end_date+"\'";
-    
+  
+  console.log("sql command is trying to find events with "+end_date+" as its end_date");
   return customSQL(sql);
 }
 
@@ -255,6 +271,7 @@ export function findEventByEndDate(end_date){
 export function allEvents(){
   var sql = "SELECT * FROM EVENTS"
 
+  console.log("sql command is trying to retrieve all event data");
   return customSQL(sql);
 }
 
@@ -267,6 +284,7 @@ export function allEvents(){
 export function locationOfEvent(idLocation){
   var sql = "SELECT * FROM LOCATION INNER JOIN EVENTS ON LOCATION.idLocation=EVENTS.locationID WHERE idLocation=\'"+idLocation+"\'"
 
+  console.log("sql command is trying to retrieve the location information for this event");
   return customSQL(sql);
 }
 
@@ -279,6 +297,7 @@ export function locationOfEvent(idLocation){
 export function adminOfEvent(idUSERS){
   var sql = "SELECT username FROM USERS INNER JOIN EVENTS ON USERS.idUSERS=EVENTS.adminID WHERE idUSERS=\'"+idUSERS+"\'"
 
+  console.log("sql command is trying to retrieve the admin username for this event");
   return customSQL(sql);
 }
 
@@ -295,6 +314,7 @@ export function adminOfEvent(idUSERS){
 export function customSQL(sql) {
     db.connection.connect() //connects us to database
     
+    console.log("SQL: "+sql);
     connection.query(sql, function (err, rows, fields) {
         if (err) throw err
       
