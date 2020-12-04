@@ -11,7 +11,7 @@ var db = require("../server") // reference to server
  * @param {string} password Password of new User
  * @description Adds a new User to the table USERS
 */
-export function createUser(username, password) {
+module.exports = function createUser(username, password) {
   var sql = "INSERT INTO USERS (username, password) VALUES (\'"+username+"\',\'"+password+"\')";
   
   console.log("sql command is trying to create a user");
