@@ -29,3 +29,4 @@ All functions handling sql queries are stored in services.js in the services fol
 - Add functionality to web pages
 - Create functions that handle sql queries in the api
 - Get Front End to use the Express API
+- test
