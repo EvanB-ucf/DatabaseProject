@@ -1,4 +1,5 @@
 var db = require("../server") // reference to server
+var asyn = require("async")
 
 //-------------//
 // USERS START //
@@ -37,17 +38,24 @@ function findUser(username) {
  * @returns {boolean} Returns TRUE if the username and password match one in the database, else it returns FALSE
  * @description Checks if a user can log in with the given credentials
 */
-function login(username, password){
-  var sql = "SELECT username FROM USERS WHERE username=\'"+username+"\' AND password=\'"+password+"\'"
+async function login(username, password){
+  var sql = "SELECT idUSERS FROM USERS WHERE username=\'"+username+"\' AND password=\'"+password+"\'"
 
   console.log("sql command is trying to verify the user's credentials");
-  if (username == customSQL(sql)[o].username){
-    console.log("credentials are valid");
-    return true;
-  }
 
-  console.log("credentials are invalid");
-  return false;
+  var sqlReturn = await customSQL(sql)
+  
+  // list object for debugging
+  // var obj = JSON.stringify(sqlReturn)
+  // console.log('Info in return: ' + obj)
+  
+    if (sqlReturn[0] != null){
+      console.log("credentials are valid");
+      return sqlReturn[0].idUSERS;
+    }
+  
+    console.log("credentials are invalid");
+    return false;
 }
 
 //------------//
@@ -384,22 +392,27 @@ function findRegisteredEventForUser(username){
  * @returns {array} Array of rows pulled from sql command, if any
  * @description Runs any custom line of sql against the database
 */
-function customSQL(sql) {
+async function customSQL(sql) {
     //db.connection.connect() //connects us to database
     
-    var rows, fields
-    console.log("SQL: "+sql);
+  var rows, fields
+  console.log("SQL: "+sql);
+  return new Promise((res, rej) => {
     db.connection.query(sql, function (err, rows, fields) {
-        if (err) throw err
-      
-        console.log('sql statement succefully executed')  
-      })
-    
-    
-    
-    if (rows == null) return 0;
-    
-    return rows;
+      if (err)
+        throw err;
+  
+      // list object for debugging
+      // var obj = JSON.stringify(rows);
+      // console.log('Info to return: ' + obj);
+      if (rows == null)
+        rows = 0;
+  
+      console.log('sql statement succefully executed');
+      res(rows);
+    })
+  })
+  
 }
 
 // db.connection.request
