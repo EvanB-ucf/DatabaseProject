@@ -24,9 +24,11 @@ export default class SearchBar extends React.Component {
   render() {
     return (
         <form className="search" onSubmit={this.handleSubmit}>
-          <label>
-            <textarea className="searchcontent" placeholder = "Search" value={this.state.value} rows="1" onChange={this.handleChange} />
-          </label>
+          <input name="filterby" type="radio" value="state" /> 
+          <p className="searchfilter">By State</p>
+          <input name="filterby" type="radio" value="city" /> 
+          <p className="searchfilter">By City</p>
+          <textarea className="searchcontent" placeholder = "Search" value={this.state.value} rows="1" onChange={this.handleChange} />
           <button className="searchsubmit" type="submit">Search</button>
         </form>
     );

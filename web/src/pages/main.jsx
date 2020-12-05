@@ -26,8 +26,10 @@ export default class HomePage extends React.Component {
             <Link to={"/Add"} className="nav-link">
               Add
             </Link>
-          </li>
+          </li> 
         </div>
+        
+        <SearchBar />
       </nav>
 
       <div className="container mt-3">
@@ -36,10 +38,6 @@ export default class HomePage extends React.Component {
           <Route exact path="/Add" component={Add} /> 
           <Route path="/HomePage/:id" component={HomePage} />
         </Switch>
-      </div>
-    
-      <div>
-        <SearchBar />
       </div>
       
     </div>

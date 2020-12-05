@@ -5,21 +5,23 @@ p  {
 
 .search {
    display: flex;
-   justify-self: right;
+   align-self: center;
+}
+
+.searchfilter {
+    flex-direction: column;
+    font-weight: 400;
+    align-self: flex-end;
 }
 
 .searchcontent {
     width: 200px;
-    height: relative;
     border: 2px solid black;
     resize: none;
     font-size: smaller;
-    margin: 3px;
 }
 
 .searchsubmit {
     width: relative;
-    height: relative;
     font-size: smaller;
-    margin-bottom: 10px;
 }
