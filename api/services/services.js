@@ -413,5 +413,6 @@ module.exports = {
   createSuperAdmin,
   findRegisteredEventForUser,
   findEventByAdmin,
-  findEventByDateRange
+  findEventByDateRange,
+  login
 }
