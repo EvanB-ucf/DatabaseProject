@@ -237,11 +237,12 @@ function findEventByName(name){
  * @returns {array} Array of rows selected from table
  * @description Finds Events registered by a given admin
 */
-function findEventByAdmin(username){
+async function findEventByAdmin(username){
   var sql = "SELECT * FROM USERS INNER JOIN EVENTS ON USERS.idUSERS=EVENTS.adminID WHERE username=\'"+username+"\'";
   
   console.log("sql command is trying to find events with "+username+" as their admin");
-  return customSQL(sql);
+  var temp = await customSQL(sql)
+  return temp;
 }
 
 /** 
@@ -290,11 +291,12 @@ function findEventByEndDate(end_date){
  * @returns {array} Array of rows selected from table
  * @description Finds Events within the two dates
 */
-function findEventByDateRange(start_date, end_date){
-  var sql = "SELECT * FROM EVENTS WHERE start_date<=\'"+end_date+"\' OR end_date>=\'"+end_date+"\'";
-  
+async function findEventByDateRange(start_date, end_date){
+  var sql = "SELECT * FROM EVENTS WHERE (start_date<=\'"+start_date+"\' AND start_date>=\'"+end_date+"\') OR (end_date>=\'"+start_date+"\' AND end_date<=\'"+end_date+"\') OR (start_date<=\'"+start_date+"\' AND end_date>=\'"+end_date+"\')";
+
   console.log("sql command is trying to find events within the given range");
-  return customSQL(sql);
+  var temp = await customSQL(sql);
+  return temp;
 }
 
 /**
@@ -342,11 +344,12 @@ function adminOfEvent(idUSERS){
  * @returns {array} Array of events in city
  * @description Gets all the events located in a given city active during date
  */
-function findEventByCityBetweenDates(city, date){
-  var sql = "SELECT * FROM EVENTS INNER JOIN LOCATION ON EVENTS.locationID=Location.idLocation WHERE city=\'"+city+"\' AND \'"+date+"\'<=end_date AND \'"+date+"\'>=start_date"
+async function findEventByCityBetweenDates(city, date){
+  var sql = "SELECT * FROM EVENTS INNER JOIN LOCATION ON EVENTS.locationID=LOCATION.idLocation WHERE city=\'"+city+"\' AND \'"+date+"\'<=end_date AND \'"+date+"\'>=start_date"
 
   console.log("sql command is trying to retrieve the events in this city currently active");
-  return customSQL(sql);
+  var temp = await customSQL(sql)
+  return temp;
 }
 
 //-------------//
@@ -364,7 +367,7 @@ function findEventByCityBetweenDates(city, date){
  * @description Creates a User Registered Event
  */
 function createRegisteredEvent(idUser, idEvent){
-  var sql = "INSERT INTO USER_REGISTRATED_EVENT (idUser, idEvent) VALUES (\'"+idUser+"\',\'"+idEvent+"\')";
+  var sql = "INSERT INTO USER_REGISTERED_EVENTS (idUser, idEvent) VALUES ("+idUser+","+idEvent+")";
 
   console.log("sql command is trying to create a registered event");
   return customSQL(sql);
@@ -372,15 +375,16 @@ function createRegisteredEvent(idUser, idEvent){
 
 /**
  * @function findRegisteredEvent
- * @param {number} username Username of user we are interested in
+ * @param {string} username Username of user we are interested in
  * @returns Array of Events registered for by the the given user
  * @description Takes the username of a user and uses that to find all events in which the user has registerd in and returns that information as an array
  */
-function findRegisteredEventForUser(username){
-  var sql = "SELECT * FROM EVENTS INNER JOIN USER_REGISTERED_EVENT ON EVENTS.idEVENTS=USER_REGISTERED_EVENT.idEvent WHERE USER_REGISTERED_EVENT.idUser=(SELECT idUSERS FROM USERS WHERE username=\'"+username+"\')";
+async function findRegisteredEventForUser(username){
+  var sql = "SELECT * FROM EVENTS INNER JOIN USER_REGISTERED_EVENTS ON EVENTS.idEVENTS=USER_REGISTERED_EVENTS.idEvent WHERE USER_REGISTERED_EVENTS.idUser=(SELECT idUSERS FROM USERS WHERE username=\'"+username+"\')";
 
   console.log("sql command is trying to retrieve registered events for user: "+username);
-  return customSQL(sql);
+  var temp = await customSQL(sql)
+  return temp;
 }
 //-----------------------//
 // REGISTERED EVENT STOP //
@@ -421,9 +425,9 @@ module.exports = {
   createUser,
   createEvent,
   createLocation,
-  findEventByCityBetweenDates,
   createRegisteredEvent,
   createSuperAdmin,
+  findEventByCityBetweenDates,
   findRegisteredEventForUser,
   findEventByAdmin,
   findEventByDateRange,
