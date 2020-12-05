@@ -1,6 +1,5 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import "./register.css";
@@ -10,9 +9,6 @@ export default class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
-            email: '',
             username: '',
             password: '',
             registered: false,
@@ -20,33 +16,27 @@ export default class Register extends React.Component {
     }
 
     validateForm = () => {
-        return this.state.firstName.length > 0 && this.state.lastName.length > 0 && this.state.username.length > 0 && this.state.password.length > 0 && this.state.email.length > 0;
+        return this.state.username.length > 0 && this.state.password.length > 0;
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log(this.state.firstName + ' ' + this.state.lastName + ' ' + this.state.username + ' ' + this.state.password + ' ' + this.state.email);
+        console.log(this.state.username + ' ' + this.state.password + ' ');
 
-        axios.post('http://3.135.218.245:3001/register', {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
+        axios.post('http://localhost:3001/register', {
             username: this.state.username,
             password: this.state.password,
-
         }).then((res) => {
-
             console.log(res);
             this.setState({ registered: true });
-
         });
     }
 
     render() {
         if (this.state.registered) {
             return (
-                <Redirect to='login' />
+                <Redirect to='/' />
             );
         }
 

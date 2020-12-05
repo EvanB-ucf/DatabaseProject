@@ -10,6 +10,7 @@ export default class LoginPage extends React.Component {
         this.state = {
             username: '',
             password: '',
+            loggedIn: false,
         };
     }
 
@@ -21,10 +22,11 @@ export default class LoginPage extends React.Component {
         event.preventDefault();
 
         // TODO: Verify correct port & this will need to be uploaded
-        axios.post('http://localhost:3000/login', {
+        axios.post('http://localhost:3001/login', {
             username: this.state.username,
             password: this.state.password,
-
+        }).then((res) => {
+            this.setState({ loggedIn: true });
         }).catch((error) => {
             console.log(error);
             if (error.response && error.response.status === 401) {
@@ -37,7 +39,7 @@ export default class LoginPage extends React.Component {
         // TODO: Update this once we know our home login page
         if (this.state.loggedIn) {
             return (
-                <Redirect to='/home' />
+                <Redirect to='/' />
             );
         }
         return (

@@ -4,23 +4,23 @@ const mysql = require('../services/services');
 
 router.post('/', async (req, res) => {
     console.log(req.body);
+
     try {
         const username = req.body.username;
         const password = req.body.password;
 
-
         // Verify the username is unique
-        if (mysql.findUser(username)) {
+        if (await mysql.findUser(username).values) {
             res.status(409).send({ message: 'Username already exists!' });
             return;
         }
 
         // If unique, we shall create and save the username! 
-        mysql.createUser(username, password);
+        await mysql.createUser(username, password);
         res.status(201).send({ message: 'User created!' });
-        await user.save();
 
     } catch (e) {
+        console.log(e);
         res.status(500).send({ message: e.message });
     }
 
