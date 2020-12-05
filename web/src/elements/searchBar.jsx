@@ -23,15 +23,12 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div class="search">
-        <form  onSubmit={this.handleSubmit}>
+        <form className="search" onSubmit={this.handleSubmit}>
           <label>
-            Search
             <textarea className="searchcontent" placeholder = "Search" value={this.state.value} rows="1" onChange={this.handleChange} />
           </label>
-          <input classname="searchsubmit" type="submit" value="Submit" />
+          <button className="searchsubmit" type="submit">Search</button>
         </form>
-      </div>
     );
   }
 }

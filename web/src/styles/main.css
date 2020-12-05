@@ -3,22 +3,23 @@ p  {
     Font-weight: 800;
 }
 
-.search{
+.search {
    display: flex;
-   justify-content: right;
+   justify-self: right;
 }
 
 .searchcontent {
     width: 200px;
     height: relative;
     border: 2px solid black;
-    padding: 5px;
     resize: none;
     font-size: smaller;
     margin: 3px;
 }
 
 .searchsubmit {
+    width: relative;
     height: relative;
-    padding: 5px;
+    font-size: smaller;
+    margin-bottom: 10px;
 }

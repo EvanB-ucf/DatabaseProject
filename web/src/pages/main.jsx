@@ -38,11 +38,10 @@ export default class HomePage extends React.Component {
         </Switch>
       </div>
     
-      <body>
-        <div>
-          <SearchBar />
-        </div>
-      </body>
+      <div>
+        <SearchBar />
+      </div>
+      
     </div>
     );
   }
