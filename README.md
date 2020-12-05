@@ -8,7 +8,7 @@ ucf project
 
 ## How to run Front End Locally (REACT)
 1. Open Linux Terminal or PowerShell at /web
-2. If running this for the first time, then Run 'npm install'
+2. If running this for the first time, then Run 'npm install', and run 'npm i react-bootstrap'
 3. Run 'npm start'
 
 ### NOTE** 

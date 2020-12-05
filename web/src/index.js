@@ -1,12 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-
-import HomePage from "./pages/main.js";
+import App from './App';
 
 ReactDOM.render(
   <BrowserRouter>
-    <HomePage />
+    <App />
   </BrowserRouter>,
   document.getElementById("main")
 );
+
+/*
+import HomePage from "./pages/main.js";
+ within ReactDOM.render(
+  <BrowserRouter>
+    <HomePage />
+  </BrowserRouter>,
+    document.getElementById("main")
+    );
+  */
