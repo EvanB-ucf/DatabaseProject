@@ -2,3 +2,23 @@ p  {
     color: Lime;
     Font-weight: 800;
 }
+
+.search{
+   display: flex;
+   justify-content: right;
+}
+
+.searchcontent {
+    width: 200px;
+    height: relative;
+    border: 2px solid black;
+    padding: 5px;
+    resize: none;
+    font-size: smaller;
+    margin: 3px;
+}
+
+.searchsubmit {
+    height: relative;
+    padding: 5px;
+}
