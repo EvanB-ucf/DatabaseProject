@@ -259,6 +259,19 @@ module.exports.findEvent = async function findEvent(searchBy, values) {
 }
 
 /** 
+ * @function findActiveEventByAdmin
+ * @param {number} adminID adminID for admin of the Event
+ * @returns {array} Array of rows selected from table
+ * @description Finds Events with the given name
+*/
+module.exports.findActiveEventByAdmin = async function findActiveEventByAdmin(adminID) {
+  var sql = "SELECT * FROM EVENTS WHERE adminID=\'" + adminID + "\' AND start_date <= CURDATE() AND end_date >= CURDATE()";
+
+  console.log("sql command is trying to find active events with " + adminID + " as its admin's ID");
+  return customSQL(sql);
+}
+
+/** 
  * @function findEventByName
  * @param {string} name Name of the Event
  * @returns {array} Array of rows selected from table

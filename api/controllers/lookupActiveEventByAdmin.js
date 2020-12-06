@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 			adminID = mysql.findUserIDFromUserName(req.body.username);
 		}
 
-		res.status(200).send(await mysql.findEventByAdmin(adminID));
+		res.status(200).send(await mysql.findActiveEventByAdmin(adminID));
 	}
 	catch (e) {
 		console.log(e);
