@@ -299,13 +299,25 @@ module.exports.findEventByStartDate = async function findEventByStartDate(start_
 
 /** 
  * @function findEventByEndDate
- * @param {string} end_date name of the Event
+ * @param {string} end_date End date of the Event
  * @returns {array} Array of rows selected from table
  * @description Finds Events with the given end_date
 */
 module.exports.findEventByEndDate = async function findEventByEndDate(end_date) {
   var sql = "SELECT * FROM EVENTS WHERE end_date=\'" + end_date + "\'";
   console.log("sql command is trying to find events with " + end_date + " as its end_date");
+  return customSQL(sql);
+}
+
+/** 
+ * @function findEventByadminID
+ * @param {string} adminID adminID of the admin whose events to look at
+ * @returns {array} Array of rows selected from table
+ * @description Finds Events with the given adminID
+*/
+module.exports.findEventByAdmin = async function findEventByAdmin(adminID) {
+  var sql = "SELECT * FROM EVENTS WHERE adminID=\'" + adminID + "\'";
+  console.log("sql command is trying to find events with " + adminID + " as its adminID");
   return customSQL(sql);
 }
 
@@ -395,4 +407,4 @@ customSQL = (sql) => {
       return resolve(results);
     });
   });
-};
+}

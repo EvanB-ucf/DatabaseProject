@@ -6,9 +6,9 @@ router.post('/', async (req, res) => {
 	console.log(req.body);
 
 	try {
-		const adminID = mysql.findUserIDFromUserName(req.body.username);
+		const username = req.body.username;
 
-		res.status(200).send(await mysql.findEventByAdmin(adminID));
+		res.status(200).send(await mysql.findRegisteredEventForUser(username));
 	}
 	catch (e) {
 		console.log(e);

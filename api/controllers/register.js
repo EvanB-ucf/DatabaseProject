@@ -9,8 +9,12 @@ router.post('/', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
+        var sqlResponse = await mysql.findUser(username);
+        console.log('');
+        console.log(sqlResponse.length);
+        console.log('');
         // Verify the username is unique
-        if ((await mysql.findUser(username)).length > 0) {
+        if (sqlResponse.length > 0) {
             res.status(409).send({ message: 'Username already exists!' });
             return;
         }
