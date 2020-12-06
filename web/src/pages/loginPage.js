@@ -27,6 +27,8 @@ export default class LoginPage extends React.Component {
             password: this.state.password,
         }).then((res) => {
             this.setState({ loggedIn: true });
+            localStorage.setItem('loggedIn', true);
+            localStorage.setItem('username', this.state.username);
         }).catch((error) => {
             console.log(error);
             if (error.response && error.response.status === 401) {
@@ -45,6 +47,7 @@ export default class LoginPage extends React.Component {
         return (
             <div>
                 <div className="Login">
+                    <h1 className="header">Login</h1>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group size="lg" controlId="username">
                             <Form.Label>Username</Form.Label>

@@ -1,10 +1,11 @@
 @media all and (min-width: 320px) {
   body {
-      background-color: dimgray;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      padding: 16px;
+    background-image: url(https://i.redd.it/klttow3qk2e41.jpg);
+    background-color: dimgray;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    padding: 16px;
   }
 
   .Register {
@@ -14,6 +15,11 @@
   .Register form {
     margin: 0 auto;
     max-width: 320px;
+  }
+
+  h1.header {
+    text-align: center;
+    color: white; 
   }
 
   .logo_container img {

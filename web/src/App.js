@@ -7,6 +7,7 @@ import Register from './pages/register';
 import HomePage from './pages/main';
 import Add from './pages/add';
 import Event from './pages/event';
+import CreateEvent from './pages/createEvent';
 
 class App extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class App extends React.Component {
             <Route exact path='/event' component={Event} />
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/' component={HomePage} />
+            <Route exact path='/create' component={CreateEvent} />
           </Switch>
         </Router>
       </div>

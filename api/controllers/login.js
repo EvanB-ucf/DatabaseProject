@@ -9,10 +9,10 @@ router.post('/', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        // if (await mysql.findUser(username).values) {
-        //     res.status(409).send({ message: 'Username does not exist!' });
-        //     return;
-        // }
+        if (await mysql.findUser(username).values) {
+            res.status(409).send({ message: 'Username does not exist!' });
+            return;
+        }
 
         if (await mysql.login(username, password)) {
             res.status(200).send({ success: true, message: 'Login successful!' });
