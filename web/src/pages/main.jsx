@@ -3,8 +3,10 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
 
-import Event from "./event";
-import Add from "./add";
+
+import Event from "./event.jsx";
+import Add from "./add.jsx";
+import SearchBar from "../elements/searchBar.jsx"
 
 export default class HomePage extends React.Component {
   render() {
@@ -24,8 +26,10 @@ export default class HomePage extends React.Component {
             <Link to={"/Add"} className="nav-link">
               Add
             </Link>
-          </li>
+          </li> 
         </div>
+        
+        <SearchBar />
       </nav>
 
       <div className="container mt-3">
@@ -35,6 +39,7 @@ export default class HomePage extends React.Component {
           <Route path="/HomePage/:id" component={HomePage} />
         </Switch>
       </div>
+      
     </div>
     );
   }

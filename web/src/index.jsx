@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 
-import HomePage from "./pages/main.js";
+import HomePage from "./pages/main.jsx";
 
 ReactDOM.render(
   <BrowserRouter>
