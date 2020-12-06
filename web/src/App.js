@@ -8,6 +8,8 @@ import HomePage from './pages/main';
 import Add from './pages/add';
 import Event from './pages/event';
 import CreateEvent from './pages/createEvent';
+import SearchEvent from './pages/search';
+import SearchUsername from './pages/searchUser';
 
 class App extends React.Component {
   render() {
@@ -22,6 +24,8 @@ class App extends React.Component {
             <Route exact path='/home' component={HomePage} />
             <Route exact path='/' component={HomePage} />
             <Route exact path='/create' component={CreateEvent} />
+            <Route exact path='/search' component={SearchEvent} />
+            <Route exact path='/searchuser' component={SearchUsername} />
           </Switch>
         </Router>
       </div>

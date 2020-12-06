@@ -3,71 +3,74 @@ import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-export default class CreateEvent extends React.Component {
+export default class SearchDateCityEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            eventTitle: '',
-            eventDescription: '',
-            eventCategory: '',
-            eventURL: '',
             eventStartYear: '2020',
             eventStartMonth: '01',
             eventStartDate: '01',
             eventEndYear: '2020',
             eventEndMonth: '01',
             eventEndDate: '01',
-            eventStreet: '',
             eventCity: '',
-            eventState: 'AL',
-            eventCreated: false,
-            eventID: '',
+            loggedInUser: '',
+            searchQueryResults: false,
+            eventsFoundFromQuery: '',
         };
     }
 
     validateForm = () => {
-        const validLength = this.state.eventTitle.length > 0 && this.state.eventDescription.length > 0 && this.state.eventDescription.length > 0 && this.state.eventStreet.length > 0 && this.state.eventCity.length > 0;
-        // Todo: handle date validation
-        return validLength;
+        return this.state.eventCity.length > 0;
     }
 
-    handleSubmit = (event) => {
+    validateUsernameForm = () => {
+        return this.state.usernameSearch.length > 0;
+    }
+
+    handleDateCitySubmit = (event) => {
         event.preventDefault();
-        const curUser = localStorage.getItem('username');
         const startDate = this.state.eventStartYear + "-" + this.state.eventStartMonth + "-" + this.state.eventStartDate;
         const endDate = this.state.eventEndYear + "-" + this.state.eventEndMonth + "-" + this.state.eventEndDate;
-        // var titleMinusWhiteSpace = this.state.eventTitle.split(' ').join('_').substring(0, 5);
-        // const url = "?name=" + titleMinusWhiteSpace + "&city=" + this.state.eventCity + "&starts=" + startDate;
-        // console.log(url);
 
-        console.log("start:" + startDate);
-        console.log("end:" + endDate);
-
-        // TODO: Verify correct port & this will need to be uploaded
-        axios.post('http://localhost:3001/create', {
-            eventTitle: this.state.eventTitle,
-            eventDescription: this.state.eventDescription,
-            eventURL: this.state.eventURL,
+        axios.post('http://localhost:3001/search', {
             eventStart: startDate,
             eventEnd: endDate,
-            eventCategory: this.state.eventCategory,
-            eventStreet: this.state.eventStreet,
             eventCity: this.state.eventCity,
-            eventState: this.state.eventState,
-            username: curUser,
+            loggedInUser: localStorage.getItem('username'),
         }).then((res) => {
-            this.state.eventCreated = true;
+            this.state.searchQueryResults = true;
+            this.state.eventsFoundFromQuery = res.data.events;
             console.log(res);
-            alert("Event created!");
+            alert("Found events from city and dates!");
         }).catch((error) => {
             console.log(error);
         });
     }
 
+    handleUsernameSubmit = (event) => {
+        event.preventDefault();
+        const startDate = this.state.eventStartYear + "-" + this.state.eventStartMonth + "-" + this.state.eventStartDate;
+        const endDate = this.state.eventEndYear + "-" + this.state.eventEndMonth + "-" + this.state.eventEndDate;
+
+        axios.post('http://localhost:3001/search', {
+            eventStart: startDate,
+            eventEnd: endDate,
+            eventCity: this.state.eventCity,
+            loggedInUser: localStorage.getItem('username'),
+        }).then((res) => {
+            this.state.searchQueryResults = true;
+            console.log(res);
+            alert("Found events from users!");
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+
+
     render() {
-        // TODO: Update this once we know our home login page
-        if (this.state.eventCreated) {
+        if (this.state.searchQueryResults) {
             return (
                 <Redirect to='/' />
             );
@@ -75,41 +78,8 @@ export default class CreateEvent extends React.Component {
         return (
             <div>
                 <div className="Login">
-                    <h1 className="header">Create an Event</h1>
-                    <Form onSubmit={this.handleSubmit}>
-
-                        <Form.Group size="lg" controlId="eventTitle">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                autoFocus
-                                value={this.state.eventTitle}
-                                onChange={(e) => this.setState({ eventTitle: e.target.value })} />
-                        </Form.Group>
-
-                        <Form.Group size="lg" controlId="eventDescription">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3}
-                                type="eventDescription"
-                                value={this.state.eventDescription}
-                                onChange={(e) => this.setState({ eventDescription: e.target.value })} />
-                        </Form.Group>
-
-                        <Form.Group size="lg" controlId="eventCategory">
-                            <Form.Label>Category</Form.Label>
-                            <Form.Control
-                                autoFocus
-                                value={this.state.eventCategory}
-                                onChange={(e) => this.setState({ eventCategory: e.target.value })} />
-                        </Form.Group>
-
-                        <Form.Group size="lg" controlId="eventURL">
-                            <Form.Label>URL</Form.Label>
-                            <Form.Control
-                                autoFocus
-                                value={this.state.eventURL}
-                                onChange={(e) => this.setState({ eventURL: e.target.value })} />
-                        </Form.Group>
-
+                    <h1 className="header">Search for Events by City and Dates</h1>
+                    <Form onSubmit={this.handleDateCitySubmit}>
                         <Form.Group size="sm" controlId="eventStartMonth">
                             <Form.Label>Start Month</Form.Label>
                             <Form.Control as="select" onChange={(e) => this.setState({ eventStartMonth: e.target.value })}>
@@ -245,15 +215,6 @@ export default class CreateEvent extends React.Component {
                             </Form.Control>
                         </Form.Group>
 
-
-                        <Form.Group size="lg" controlId="eventStreet">
-                            <Form.Label>Street Address</Form.Label>
-                            <Form.Control
-                                type="eventStreet"
-                                value={this.state.eventStreet}
-                                onChange={(e) => this.setState({ eventStreet: e.target.value })} />
-                        </Form.Group>
-
                         <Form.Group size="lg" controlId="eventCity">
                             <Form.Label>City</Form.Label>
                             <Form.Control
@@ -262,63 +223,7 @@ export default class CreateEvent extends React.Component {
                                 onChange={(e) => this.setState({ eventCity: e.target.value })} />
                         </Form.Group>
 
-                        <Form.Group size="lg" controlId="eventState">
-                            <Form.Label>State</Form.Label>
-                            <Form.Control as="select" onChange={(e) => this.setState({ eventState: e.target.value })}>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </Form.Control>
-                        </Form.Group>
-                        <Button block size="lg" type="submit" disabled={!this.validateForm()}>Create Event</Button>
+                        <Button block size="lg" type="submit" disabled={!this.validateForm()}>Search</Button>
                     </Form>
                 </div>
             </div>

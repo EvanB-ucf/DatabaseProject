@@ -360,7 +360,7 @@ module.exports.adminOfEvent = function adminOfEvent(idUSERS) {
  * @description Creates a User Registered Event
  */
 module.exports.createRegisteredEvent = function createRegisteredEvent(idUser, idEvent) {
-  var sql = "INSERT INTO USER_REGISTRATED_EVENT (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
+  var sql = "INSERT INTO USER_REGISTERED_EVENTS (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
   console.log("sql command is trying to create a registered event");
   return customSQL(sql);
 }
@@ -380,6 +380,10 @@ module.exports.findRegisteredEventForUser = function findRegisteredEventForUser(
 //-----------------------//
 // REGISTERED EVENT STOP //
 //-----------------------//
+
+module.exports.exportedCustomSQL = async function exportedCustomSQL(sql) {
+  return customSQL(sql);
+}
 
 /** 
  * @function customSQL
