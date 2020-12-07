@@ -37,6 +37,7 @@ export default class SearchUsername extends React.Component {
 
 
 
+
     render() {
         if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
             return (

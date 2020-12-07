@@ -6,7 +6,7 @@
 
     .card {
         margin: 0 auto;
-        max-width: 320px;
+        max-width: '18rem';
         border: none;
         border-radius: 10px;
         background-color: #fff
