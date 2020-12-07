@@ -33,10 +33,11 @@ export default class Register extends React.Component {
                 this.setState({ registered: true });
                 console.log("User account created!");
                 alert("User account created!");
-            } else if (res.status === 409) {
-                alert("Username already exists!");
             }
         }).catch((error) => {
+            if (error.response.status === 409) {
+                alert("Username already exists!");
+            }
             console.log(error);
         });
     }

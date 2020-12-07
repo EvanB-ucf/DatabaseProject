@@ -43,7 +43,12 @@ router.post('/', async (req, res) => {
 
     } catch (e) {
         console.log(e);
-        res.status(500).send({ message: e.message, });
+        if (error.response.status === 409) {
+            alert("Username already exists!");
+        }
+        else {
+            res.status(500).send({ message: e.message, });
+        }
     }
 });
 

@@ -53,7 +53,7 @@ module.exports.loginUser = async function loginUser(username, password) {
   var sql = "SELECT username FROM USERS WHERE username=\'" + username + "\' AND password=\'" + password + "\'"
 
   const result = await customSQL(sql);
-  if (username == result[0].username) {
+  if (result.length > 0) {
     console.log("User's credentials are valid");
     return true;
   }
@@ -100,7 +100,7 @@ module.exports.loginSuperAdmin = async function loginSuperAdmin(username, passwo
   var sql = "SELECT username FROM SUPERADMIN WHERE username=\'" + username + "\' AND PASSWORD=\'" + password + "\'"
 
   const result = await customSQL(sql);
-  if (username == result[0].username) {
+  if (result.length > 0) {
     console.log("Super admin's credentials are valid");
     return true;
   }
