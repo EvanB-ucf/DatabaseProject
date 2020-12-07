@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
         // Then adds them to the table
         await mysql.createRegisteredEvent(userID, eventID);
         res.status(201).send({ message: 'User registered for an event!' });
+
     } catch (e) {
         console.log(e);
         res.status(500).send({ message: e.message });

@@ -29,6 +29,7 @@ export default class Register extends React.Component {
             password: this.state.password,
         }).then((res) => {
             console.log(res);
+            alert(res);
             this.setState({ registered: true });
         });
     }
