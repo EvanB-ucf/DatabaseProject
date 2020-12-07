@@ -94,6 +94,20 @@ export default class HomePage extends React.Component {
               <Link to={"/search"} className="nav-link">Search Events</Link>
             </li>
           </div>
+          <div className="Logout Button">
+            <li className="nav-item">
+              <button href="/login" type="button" class="btn btn-outline-primary" onClick = {() => {
+                this.setState({
+                  username: "",
+                  isSuperAdmin: false,
+                  eventsUserRegistered: [],
+                  eventsUserOrganized: []
+                });
+                localStorage.clear();
+                }}
+              >Log Out</button>
+            </li>
+          </div>
         </nav>
 
         <div>
