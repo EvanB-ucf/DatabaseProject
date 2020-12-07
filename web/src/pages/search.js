@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import EventCard from "../component/eventCard";
 
 export default class SearchDateCityEvent extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class SearchDateCityEvent extends React.Component {
             eventCity: '',
             loggedInUser: '',
             searchQueryResults: false,
-            eventsFoundFromQuery: '',
+            eventsFoundFromQuery: [],
         };
     }
 
@@ -39,42 +40,30 @@ export default class SearchDateCityEvent extends React.Component {
             eventCity: this.state.eventCity,
             loggedInUser: localStorage.getItem('username'),
         }).then((res) => {
-            this.state.searchQueryResults = true;
-            this.state.eventsFoundFromQuery = res.data.events;
-            console.log(res);
-            alert("Found events from city and dates!");
+            this.setState({ eventsFoundFromQuery: res.data.events });
+            this.setState({ searchQueryResults: true });
         }).catch((error) => {
             console.log(error);
         });
     }
-
-    handleUsernameSubmit = (event) => {
-        event.preventDefault();
-        const startDate = this.state.eventStartYear + "-" + this.state.eventStartMonth + "-" + this.state.eventStartDate;
-        const endDate = this.state.eventEndYear + "-" + this.state.eventEndMonth + "-" + this.state.eventEndDate;
-
-        axios.post('http://localhost:3001/search', {
-            eventStart: startDate,
-            eventEnd: endDate,
-            eventCity: this.state.eventCity,
-            loggedInUser: localStorage.getItem('username'),
-        }).then((res) => {
-            this.state.searchQueryResults = true;
-            console.log(res);
-            alert("Found events from users!");
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
-
 
     render() {
-        if (this.state.searchQueryResults) {
+        if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
             return (
-                <Redirect to='/' />
+                <Redirect to='/login' />
             );
         }
+
+        const eventResults = this.state.eventsFoundFromQuery;
+        if (this.state.searchQueryResults) {
+            const eventResultsList = eventResults.map(event => {
+                return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
+            });
+            return (
+                <div> <ul> {eventResultsList} </ul> </div>
+            );
+        }
+
         return (
             <div>
                 <div className="Login">

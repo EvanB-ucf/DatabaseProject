@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import EventCard from "../component/eventCard";
 
 export default class SearchUsername extends React.Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export default class SearchUsername extends React.Component {
             usernameSearch: '',
             searchedUserQueryType: 'registered',
             searchQueryResults: false,
+            eventsFoundFromQuery: [],
         };
     }
 
@@ -25,9 +27,9 @@ export default class SearchUsername extends React.Component {
             usernameSearch: this.state.usernameSearch,
             searchedUserQueryType: this.state.searchedUserQueryType,
         }).then((res) => {
-            this.state.searchQueryResults = true;
+            this.setState({ searchQueryResults: true });
+            this.setState({ eventsFoundFromQuery: res.data.events });
             console.log(res);
-            alert("Found events from users!");
         }).catch((error) => {
             console.log(error);
         });
@@ -36,11 +38,22 @@ export default class SearchUsername extends React.Component {
 
 
     render() {
-        if (this.state.searchQueryResults) {
+        if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
             return (
-                <Redirect to='/' />
+                <Redirect to='/login' />
             );
         }
+
+        const eventResults = this.state.eventsFoundFromQuery;
+        if (this.state.searchQueryResults) {
+            const eventResultsList = eventResults.map(event => {
+                return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
+            });
+            return (
+                <div> <ul> {eventResultsList} </ul> </div>
+            );
+        }
+
         return (
             <div>
                 <div className="Login">

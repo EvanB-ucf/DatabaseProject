@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 
         console.log(eventStart);
         console.log(eventEnd);
-        const findLocationsSQL = "SELECT * FROM EVENTS AS e, LOCATION AS l WHERE e.start_date=\'" + eventStart + "\' AND e.end_date>=\'" + eventEnd + "\' AND l.city=\'" + eventCity + "\'";
+        const findLocationsSQL = "SELECT * FROM EVENTS AS e, LOCATION AS l WHERE l.idLocation = e.locationID AND e.start_date>=\'" + eventStart + "\' AND e.end_date<=\'" + eventEnd + "\' AND l.city=\'" + eventCity + "\'";
         const locations = await mysql.exportedCustomSQL(findLocationsSQL);
 
         console.log(locations);
