@@ -246,13 +246,17 @@ module.exports.updateEventURL = async function updateEventURL(eventID, newURL) {
  * @returns Array of rows of Events which contains all fields which are equivalent to those defined by searchBy and values.
  * @description This function allows you to search the EVENTS table with a variety of filters. For example, if you wanted to find a Event where the name is party and the start_date is 01/07/20, then searchBy = ["name","start_date"] and values = ["party",01072020]
  */
-module.exports.findEvent = async function findEvent(searchBy, values) {
-  var sql = "SELECT * FROM EVENTS WHERE \'";
+module.exports.findEvent = async function findEvent(searchBy, values, relations, useQuotes) {
+  var sql = "SELECT EVENTS.idEVENTS, EVENTS.adminID, EVENTS.locationID, EVENTS.name, " +
+            "EVENTS.category, EVENTS.description, EVENTS.url, EVENTS.start_date, EVENTS.end_date " +
+            "FROM EVENTS INNER JOIN LOCATION " +
+            "ON EVENTS.locationID = LOCATION.idLocation " +
+            "WHERE ";
 
-  for (var i = 0; i < searchBy.length - 1; i++) {
-    sql += searchBy[0] + "\'=\'" + values[0] + "\' AND "
+  for (var i = 0; i < searchBy.length; i++) {
+    sql += searchBy[i] + " " + relations[i] + (useQuotes[i]? " \'" : " ") + values[i] + (useQuotes[i]? "\' " : " ") + "AND ";
   }
-  sql += searchBy[0] + "\'=\'" + values[0] + "\'";
+  sql += "TRUE";
 
   console.log("sql command is trying to find events with special filters");
   return customSQL(sql)
