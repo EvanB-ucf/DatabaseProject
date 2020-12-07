@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         const eventCity = req.body.eventCity;
         const eventState = req.body.eventState;
         const whoMadeEvent = req.body.username;
-        const tempURL = req.body.eventURL;
+        const eventURL = req.body.eventURL;
 
         // Check if already existing location and grab it's location ID: 
         // Check location ID, if not a location, then add it
@@ -45,15 +45,15 @@ router.post('/', async (req, res) => {
         }
 
         console.log("UserID: " + userID);
-        await mysql.createEvent(userID, locationID, eventTitle, eventCategory, eventDescription, tempURL, eventStart, eventEnd);
+        await mysql.createEvent(userID, locationID, eventTitle, eventCategory, eventDescription, eventURL, eventStart, eventEnd);
 
         // Update URL
-        var queryEventID = await mysql.getEventID(userID, locationID, eventTitle, eventCategory, eventStart, eventEnd);
-        const eventID = queryEventID[0].idEVENTS;
-        const updatedURL = '?eventID=' + eventID;
-        await mysql.updateEventURL(eventID, updatedURL);
+        // var queryEventID = await mysql.getEventID(userID, locationID, eventTitle, eventCategory, eventStart, eventEnd);
+        // const eventID = queryEventID[0].idEVENTS;
+        // const updatedURL = '?eventID=' + eventID;
+        // await mysql.updateEventURL(eventID, updatedURL);
 
-        res.status(201).send({ message: 'Event saved!', eventURL: updatedURL });
+        res.status(201).send({ message: 'Event saved!' });
 
     } catch (e) {
         console.log(e);

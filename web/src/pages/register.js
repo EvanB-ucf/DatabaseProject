@@ -29,14 +29,22 @@ export default class Register extends React.Component {
             password: this.state.password,
         }).then((res) => {
             console.log(res);
-            this.setState({ registered: true });
+            if (res && res.status === 201) {
+                this.setState({ registered: true });
+                console.log("User account created!");
+                alert("User account created!");
+            } else if (res.status === 409) {
+                alert("Username already exists!");
+            }
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
     render() {
         if (this.state.registered) {
             return (
-                <Redirect to='/' />
+                <Redirect to='/login' />
             );
         }
 
@@ -61,6 +69,9 @@ export default class Register extends React.Component {
                             /> </Form.Group>
                         <Button block size="lg" type="submit" disabled={!this.validateForm()}> Register</Button>
                     </Form>
+                </div>
+                <div className="RedirectButton">
+                    <Button href="/login" block size="lg" variant="secondary">Already Have An Account?</Button>
                 </div>
             </div >
         );

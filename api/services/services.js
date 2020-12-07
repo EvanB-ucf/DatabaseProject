@@ -48,16 +48,16 @@ module.exports.findUserIDFromUserName = async function findUserIDFromUserName(us
  * @returns {boolean} Returns TRUE if the username and password match one in the database, else it returns FALSE
  * @description Checks if a user can log in with the given credentials
 */
-module.exports.login = async function login(username, password) {
+module.exports.loginUser = async function loginUser(username, password) {
   console.log("sql command is trying to verify the user's credentials");
   var sql = "SELECT username FROM USERS WHERE username=\'" + username + "\' AND password=\'" + password + "\'"
 
   const result = await customSQL(sql);
   if (username == result[0].username) {
-    console.log("credentials are valid");
+    console.log("User's credentials are valid");
     return true;
   }
-  console.log("credentials are invalid");
+  console.log("User's credentials are invalid");
   return false;
 }
 
@@ -88,11 +88,24 @@ module.exports.createSuperAdmin = function createSuperAdmin(username, password) 
  * @returns {array} Array of rows selected from table
  * @description Finds Super Admins with the given username
 */
-module.exports.findSuperAdmin = function findSuperAdmin(username) {
+module.exports.findSuperAdmin = async function findSuperAdmin(username) {
   var sql = "SELECT * FROM SUPERADMIN WHERE username=\'" + username + "\'";
 
   console.log("sql command is trying to find super admins with " + username + " as their username");
   return customSQL(sql);
+}
+
+module.exports.loginSuperAdmin = async function loginSuperAdmin(username, password) {
+  console.log("sql command is trying to verify the superAdmins's credentials");
+  var sql = "SELECT username FROM SUPERADMIN WHERE username=\'" + username + "\' AND PASSWORD=\'" + password + "\'"
+
+  const result = await customSQL(sql);
+  if (username == result[0].username) {
+    console.log("Super admin's credentials are valid");
+    return true;
+  }
+  console.log("Super admin's credentials are invalid");
+  return false;
 }
 
 //------------------//
@@ -360,7 +373,7 @@ module.exports.adminOfEvent = function adminOfEvent(idUSERS) {
  * @description Creates a User Registered Event
  */
 module.exports.createRegisteredEvent = function createRegisteredEvent(idUser, idEvent) {
-  var sql = "INSERT INTO USER_REGISTRATED_EVENT (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
+  var sql = "INSERT INTO USER_REGISTERED_EVENTS (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
   console.log("sql command is trying to create a registered event");
   return customSQL(sql);
 }
@@ -380,6 +393,10 @@ module.exports.findRegisteredEventForUser = function findRegisteredEventForUser(
 //-----------------------//
 // REGISTERED EVENT STOP //
 //-----------------------//
+
+module.exports.exportedCustomSQL = async function exportedCustomSQL(sql) {
+  return customSQL(sql);
+}
 
 /** 
  * @function customSQL

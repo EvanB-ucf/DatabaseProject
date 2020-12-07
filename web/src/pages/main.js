@@ -1,42 +1,104 @@
-import { Switch, Route, Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
-
-import Event from "./event";
-import Add from "./add";
+import EventCard from "../component/eventCard";
+import axios from 'axios';
 
 
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: localStorage.getItem('username'),
+      isSuperAdmin: localStorage.getItem('isSuperAdmin'),
+      eventsUserRegistered: [],
+      eventsUserOrganized: [],
     };
+
+    this.determineSuperPowerButton();
+    this.fetchEventsRegistered();
+    this.fetchEventsOrganized();
+  }
+
+  determineSuperPowerButton = () => {
+    const isSuperAdmin = this.state.isSuperAdmin;
+    let button;
+    if (isSuperAdmin === 'true') {
+      button = <div className="navbar-nav mr-auto"> <li className="nav-item">
+        <Link to={"/searchuser"} className="nav-link">Search Users</Link></li></div>;
+    } else {
+      button = <div className="navbar-nav mr-auto"> <li className="nav-item"> <Link to={"/create"} className="nav-link">Create Event</Link></li></div>;
+    }
+    return button;
+  }
+
+  fetchEventsRegistered = () => {
+    axios.post('http://localhost:3001/searchuser', {
+      loggedInUser: localStorage.getItem('username'),
+      usernameSearch: localStorage.getItem('username'),
+      searchedUserQueryType: 'registered',
+    }).then((res) => {
+      this.setState({ eventsUserRegistered: res.data.events });
+      console.log(res);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  fetchEventsOrganized = () => {
+    axios.post('http://localhost:3001/searchuser', {
+      loggedInUser: localStorage.getItem('username'),
+      usernameSearch: localStorage.getItem('username'),
+      searchedUserQueryType: 'organized',
+    }).then((res) => {
+      this.setState({ eventsUserOrganized: res.data.events });
+      console.log(res);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
 
   render() {
+    if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
+      return (
+        <Redirect to='/login' />
+      );
+    }
+
+    let eventUserRegisteredList, eventUserOrganizedList;
+    if (this.state.eventsUserRegistered) {
+      const eventRegisteredList = this.state.eventsUserRegistered.map(event => {
+        return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
+      });
+      eventUserRegisteredList = (<div> <ul> {eventRegisteredList} </ul> </div>);
+    }
+
+    if (this.state.eventsUserOrganized) {
+      const eventResultsList = this.state.eventsUserOrganized.map(event => {
+        return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
+      });
+      eventUserOrganizedList = (
+        <div> <ul> {eventResultsList} </ul> </div>
+      );
+    }
+
     return (
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/HomePage" className="navbar-brand">Database</a>
+          <a href="/" className="navbar-brand">Home</a>
+          <div>{this.determineSuperPowerButton()}</div>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to={"/Event"} className="nav-link">Events</Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/Add"} className="nav-link">Add</Link>
+              <Link to={"/search"} className="nav-link">Search Events</Link>
             </li>
           </div>
         </nav>
 
-        <div className="container mt-3">
-          <Switch>
-            <Route exact path={["/", "/Event"]} component={Event} />
-            <Route exact path="/Add" component={Add} />
-            <Route path="/HomePage/:id" component={HomePage} />
-          </Switch>
+        <div>
+          <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>
+          <div><p>Events Organized</p>{eventUserOrganizedList}<hr /></div>
         </div>
       </div>
     );

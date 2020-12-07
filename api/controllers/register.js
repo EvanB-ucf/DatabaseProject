@@ -9,8 +9,12 @@ router.post('/', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
+
         // Verify the username is unique
-        if (await mysql.findUser(username).values) {
+        const superAdminQuery = await mysql.findSuperAdmin(username);
+        const userQuery = await mysql.findUser(username);
+
+        if (superAdminQuery.length > 0 || userQuery.length > 0) {
             res.status(409).send({ message: 'Username already exists!' });
             return;
         }
