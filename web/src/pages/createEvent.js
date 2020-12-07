@@ -72,6 +72,11 @@ export default class CreateEvent extends React.Component {
                 <Redirect to='/' />
             );
         }
+        if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
+            return (
+                <Redirect to='/login' />
+            );
+        }
         return (
             <div>
                 <div className="Login">

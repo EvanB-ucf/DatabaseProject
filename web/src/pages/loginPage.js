@@ -10,7 +10,7 @@ export default class LoginPage extends React.Component {
         this.state = {
             username: '',
             password: '',
-            loggedIn: false,
+            redirectToHome: false,
         };
     }
 
@@ -26,24 +26,29 @@ export default class LoginPage extends React.Component {
             username: this.state.username,
             password: this.state.password,
         }).then((res) => {
-            this.setState({ loggedIn: true });
+            console.log(res);
             localStorage.setItem('loggedIn', true);
             localStorage.setItem('username', this.state.username);
+            localStorage.setItem('isSuperAdmin', res.data.isSuperAdmin);
+            this.setState({ redirectToHome: true });
         }).catch((error) => {
             console.log(error);
             if (error.response && error.response.status === 401) {
                 alert('Invalid username/password combination');
+            } else if (error.response && error.response.status === 409) {
+                alert('Username does not exist!');
             }
         });
     }
 
     render() {
         // TODO: Update this once we know our home login page
-        if (this.state.loggedIn) {
+        if (this.state.redirectToHome) {
             return (
                 <Redirect to='/' />
             );
         }
+
         return (
             <div>
                 <div className="Login">
@@ -67,6 +72,9 @@ export default class LoginPage extends React.Component {
                         </Form.Group>
                         <Button block size="lg" type="submit" disabled={!this.validateForm()}> Login </Button>
                     </Form>
+                </div>
+                <div className="RedirectButton">
+                    <Button href="/register" block size="lg" variant="secondary">Need to Register?</Button>
                 </div>
             </div>
         );

@@ -21,12 +21,13 @@ router.post('/', async (req, res) => {
                 return;
             } else {
                 res.status(401).send({ message: 'Invalid username and/or password for superAdmin.' });
+                return;
             }
         }
 
         // Then check if they are a user and give them an error if the username they input just doesn't exist 
         const userQuery = await mysql.findUser(username);
-        if (userQuery.length > 0) {
+        if (userQuery.length === 0) {
             res.status(409).send({ message: 'Username does not exist!' });
             return;
         }
@@ -37,6 +38,7 @@ router.post('/', async (req, res) => {
             return;
         } else {
             res.status(401).send({ message: 'User has invalid username and/or password.' });
+            return;
         }
 
     } catch (e) {

@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
         const userQuery = await mysql.findUser(username);
 
         if (superAdminQuery.length > 0 || userQuery.length > 0) {
-            console.log("EHLLO?");
             res.status(409).send({ message: 'Username already exists!' });
             return;
         }

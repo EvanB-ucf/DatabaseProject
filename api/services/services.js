@@ -100,8 +100,6 @@ module.exports.loginSuperAdmin = async function loginSuperAdmin(username, passwo
   var sql = "SELECT username FROM SUPERADMIN WHERE username=\'" + username + "\' AND PASSWORD=\'" + password + "\'"
 
   const result = await customSQL(sql);
-  console.log("Result of SQL loginSuperAdmin =" + result);
-
   if (username == result[0].username) {
     console.log("Super admin's credentials are valid");
     return true;
