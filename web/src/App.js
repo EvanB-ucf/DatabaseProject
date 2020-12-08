@@ -2,14 +2,14 @@ import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 // Import our pages to one place for our router to redirect as needed
-import LoginPage from './pages/loginPage';
-import Register from './pages/register';
-import HomePage from './pages/main';
-import Add from './pages/add';
-import Event from './pages/event';
-import CreateEvent from './pages/createEvent';
-import SearchEvent from './pages/search';
-import SearchUsername from './pages/searchUser';
+import LoginPage from './pages/loginPage.jsx';
+import Register from './pages/register.jsx';
+import HomePage from './pages/main.jsx';
+import Add from './pages/add.jsx';
+import Event from './pages/event.jsx';
+import CreateEvent from './pages/createEvent.jsx';
+import SearchEvent from './pages/search.jsx';
+import SearchUsername from './pages/searchUser.jsx';
 
 class App extends React.Component {
   render() {
