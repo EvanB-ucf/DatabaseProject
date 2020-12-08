@@ -23,7 +23,7 @@ export default class EventCard extends React.Component {
         if (isSuperAdmin === 'true') {
             button = <div />;
         } else {
-            <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>
+            button = <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>
         }
         return button;
     }
