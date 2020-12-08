@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import EventCard from "../component/eventCard";
+import NavBar from "../component/navBar.jsx";
 
 export default class SearchDateCityEvent extends React.Component {
     constructor(props) {
@@ -66,6 +67,7 @@ export default class SearchDateCityEvent extends React.Component {
 
         return (
             <div>
+                <NavBar></NavBar>
                 <div className="Login">
                     <h1 className="header">Search for Events by City and Dates</h1>
                     <Form onSubmit={this.handleDateCitySubmit}>

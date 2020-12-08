@@ -3,8 +3,9 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
 import EventCard from "../component/eventCard";
+import NavBar from "../component/navBar.jsx";
 import axios from 'axios';
-import SearchBar from '../component/searchBar';
+import SearchBar from '../component/searchBar.jsx';
 
 
 export default class HomePage extends React.Component {
@@ -17,9 +18,18 @@ export default class HomePage extends React.Component {
       eventsUserOrganized: [],
     };
 
-    this.determineSuperPowerButton();
     this.fetchEventsRegistered();
     this.fetchEventsOrganized();
+  }
+
+  logout = () => {
+    this.setState({
+        username: "",
+        isSuperAdmin: false,
+        eventsUserRegistered: [],
+        eventsUserOrganized: []
+    });
+    localStorage.clear();
   }
 
   determineSuperPowerButton = () => {
@@ -87,32 +97,10 @@ export default class HomePage extends React.Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/" className="navbar-brand">Home</a>
-          <div>{this.determineSuperPowerButton()}</div>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/search"} className="nav-link">Search Events</Link>
-            </li>
-          </div>
-          <div className="Logout Button">
-            <li className="nav-item">
-              <button href="/login" type="button" class="btn btn-outline-primary" onClick = {() => {
-                this.setState({
-                  username: "",
-                  isSuperAdmin: false,
-                  eventsUserRegistered: [],
-                  eventsUserOrganized: []
-                });
-                localStorage.clear();
-                }}
-              >Log Out</button>
-            </li>
-          </div>
-        </nav>
-        
+        <NavBar></NavBar>
+
         <SearchBar></SearchBar>
-      
+
         <div>
           <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>
           <div><p>Events Organized</p>{eventUserOrganizedList}<hr /></div>
