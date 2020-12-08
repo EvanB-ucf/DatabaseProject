@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
 import EventCard from "../component/eventCard";
 import axios from 'axios';
+import SearchBar from '../component/searchBar';
 
 
 export default class HomePage extends React.Component {
@@ -109,7 +110,9 @@ export default class HomePage extends React.Component {
             </li>
           </div>
         </nav>
-
+        
+        <SearchBar></SearchBar>
+      
         <div>
           <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>
           <div><p>Events Organized</p>{eventUserOrganizedList}<hr /></div>
