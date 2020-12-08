@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
 import EventCard from "../component/eventCard";
 import axios from 'axios';
-import SearchBar from '../component/searchBar';
+import SearchBar from '../component/searchBar.jsx';
 
 
 export default class HomePage extends React.Component {
@@ -95,6 +95,7 @@ export default class HomePage extends React.Component {
               <Link to={"/search"} className="nav-link">Search Events</Link>
             </li>
           </div>
+          <SearchBar />
           <div className="Logout Button">
             <li className="nav-item">
               <button href="/login" type="button" class="btn btn-outline-primary" onClick = {() => {
@@ -109,9 +110,10 @@ export default class HomePage extends React.Component {
               >Log Out</button>
             </li>
           </div>
+        
         </nav>
         
-        <SearchBar></SearchBar>
+        
       
         <div>
           <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>
