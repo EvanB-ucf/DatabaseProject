@@ -8,7 +8,7 @@ ucf project
 
 ## How to run Front End Locally (REACT)
 1. Open Linux Terminal or PowerShell at /web
-2. If running this for the first time, then Run 'npm install'
+2. If running this for the first time, then Run 'npm install', and run 'npm i react-bootstrap'
 3. Run 'npm start'
 
 ### NOTE** 
@@ -18,7 +18,7 @@ Just make sure that it all goes in the /web folder and document how to get it ru
 
 ## How to run Back End Locally (EXPRESS)
 1. Open Linux Terminal or PowerShell at /api
-2. If running this for the first time, then Run 'npm install', and Run 'npm install mysql'
+2. If running this for the first time, then Run 'npm install', 'npm install mysql', 'npm install cors', and 'npm install body-parser'
 3. Run 'node server.js'
 
 ### NOTE**

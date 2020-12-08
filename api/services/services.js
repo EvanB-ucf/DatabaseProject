@@ -32,6 +32,26 @@ module.exports.findUser = async function findUser(username) {
 }
 
 /** 
+ * @function login
+ * @param {string} username Username of User
+ * @param {string} password Password of User
+ * @returns {boolean} Returns TRUE if the username and password match one in the database, else it returns FALSE
+ * @description Checks if a user can log in with the given credentials
+*/
+module.exports.loginUser = async function loginUser(username, password) {
+  console.log("sql command is trying to verify the user's credentials");
+  var sql = "SELECT username FROM USERS WHERE username='" + username + "' AND password='" + password + "'"
+
+  const result = await customSQL(sql);
+  if (result.length > 0) {
+    console.log("User's credentials are valid");
+    return true;
+  }
+  console.log("User's credentials are invalid");
+  return false;
+}
+
+/** 
  * @function findUserIDFromUserName
  * @param {string} username Username of the desired User
  * @returns {array} Array of usernames selected from table
@@ -96,6 +116,19 @@ module.exports.findSuperAdmin = async function findSuperAdmin(username) {
 
   console.log("sql command is trying to find super admins with " + username + " as their username");
   return customSQL(sql);
+}
+
+module.exports.loginSuperAdmin = async function loginSuperAdmin(username, password) {
+  console.log("sql command is trying to verify the superAdmins's credentials");
+  var sql = "SELECT username FROM SUPERADMIN WHERE username='" + username + "' AND PASSWORD='" + password + "'"
+
+  const result = await customSQL(sql);
+  if (result.length > 0) {
+    console.log("Super admin's credentials are valid");
+    return true;
+  }
+  console.log("Super admin's credentials are invalid");
+  return false;
 }
 
 //------------------//
@@ -475,6 +508,7 @@ module.exports.findRegisteredEventForUser = async function findRegisteredEventFo
  * @returns {array} Array of rows pulled from sql command, if any
  * @description Runs any custom line of sql against the database
 */
+
 customSQL = (sql) => {
   console.log("customSQL: " + sql);
   return new Promise((resolve, reject) => {
@@ -483,4 +517,27 @@ customSQL = (sql) => {
       return resolve(results);
     });
   });
+};
+
+module.exports.exportedCustomSQL = async function exportedCustomSQL(sql) {
+  return customSQL(sql);
 }
+
+
+// async function customSQL(sql) {
+//   console.log(sql);
+//   var result = undefined;
+
+//   await db.connection.query(sql, function (err, rows, fields) {
+//     if (err) throw err;
+//     console.log(rows);
+//     if (rows == null) return null;
+//     result = rows;
+//     return rows;
+//   });
+
+//   console.log(result);
+//   return result;
+// }
+
+// module.export = { customSQL };

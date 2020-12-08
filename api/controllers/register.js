@@ -9,12 +9,12 @@ router.post('/', async (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
 
-        var sqlResponse = await mysql.findUser(username);
-        console.log('');
-        console.log(sqlResponse.length);
-        console.log('');
+
         // Verify the username is unique
-        if (sqlResponse.length > 0) {
+        const superAdminQuery = await mysql.findSuperAdmin(username);
+        const userQuery = await mysql.findUser(username);
+
+        if (superAdminQuery.length > 0 || userQuery.length > 0) {
             res.status(409).send({ message: 'Username already exists!' });
             return;
         }
@@ -30,4 +30,4 @@ router.post('/', async (req, res) => {
 
 });
 
-module.exports = router;
+module.exports = router; 

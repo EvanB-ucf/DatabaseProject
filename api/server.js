@@ -12,6 +12,5 @@ app.use(cors());
 // Include routes 
 app.use(require('./controllers'));
 
-
 app.listen(appPort);
 console.log(`server started on port ${appPort}`);
