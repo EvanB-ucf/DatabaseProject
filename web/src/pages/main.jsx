@@ -3,10 +3,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/main.css";
 import EventCard from "../component/eventCard";
-import axios from "axios";
-import MyNavBar from "../component/navbar.jsx";
-import MyTabs from "../component/tabs.jsx";
-//import SearchBar from "../component/searchBar";
+import NavBar from "../component/navBar.jsx";
+import axios from 'axios';
 
 export default class HomePage extends React.Component {
   constructor(props) {
@@ -18,9 +16,18 @@ export default class HomePage extends React.Component {
       eventsUserOrganized: [],
     };
 
-    this.determineSuperPowerButton();
     this.fetchEventsRegistered();
     this.fetchEventsOrganized();
+  }
+
+  logout = () => {
+    this.setState({
+        username: "",
+        isSuperAdmin: false,
+        eventsUserRegistered: [],
+        eventsUserOrganized: []
+    });
+    localStorage.clear();
   }
 
   determineSuperPowerButton = () => {
@@ -153,8 +160,7 @@ export default class HomePage extends React.Component {
 
     return (
       <div>
-        <MyNavBar handleLogOut={this.handleLogOut}></MyNavBar>
-
+        <NavBar></NavBar>
         <div>
           <MyTabs></MyTabs>
         </div>

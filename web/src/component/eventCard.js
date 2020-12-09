@@ -17,43 +17,31 @@ export default class EventCard extends React.Component {
     this.canRegister = this.canRegister.bind(this);
   }
 
-  canRegister() {
-    const isSuperAdmin = localStorage.getItem("isSuperAdmin");
-    let button;
-    if (isSuperAdmin === "true") {
-      button = <div />;
-    } else {
-      <Button
-        block
-        size="sm"
-        type="button"
-        variant="warning"
-        style={{ display: "inlineBlock" }}
-        onClick={this.handleUserRegisters}
-      >
-        Register
-      </Button>;
+    canRegister() {
+        const isSuperAdmin = localStorage.getItem('isSuperAdmin');
+        if (isSuperAdmin === 'true') {
+            return <div />;
+        } else {
+            return <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>;
+        }
+
     }
     return button;
   }
 
-  handleUserRegisters = (idEvent) => {
-    const loggedInUser = localStorage.getItem("username");
+    handleUserRegisters = () => {
 
-    axios
-      .post("http://localhost:3001/addevent", {
-        username: loggedInUser,
-        eventEnd: this.state.idEVENTS,
-      })
-      .then((res) => {
-        if (res.status && res.status === 201) {
-          alert("Congrats you are registered for the event!");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+        axios.post('http://localhost:3001/addevent', {
+            loggedInUser: localStorage.getItem('username'),
+            idEVENTS: this.state.idEVENTS,
+        }).then((res) => {
+            if (res.status && res.status === 201) {
+                alert("Congrats you are registered for the event!");
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
   render() {
     const startDateParsed = this.state.start_date.substring(0, 10);
