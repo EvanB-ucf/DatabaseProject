@@ -3,6 +3,14 @@ p  {
     Font-weight: 800;
 }
 
+.user {
+    justify-self: right;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
 .search {
    display: flex;
    margin-right: 10px;

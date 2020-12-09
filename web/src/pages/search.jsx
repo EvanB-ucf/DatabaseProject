@@ -48,17 +48,6 @@ export default class SearchDateCityEvent extends React.Component {
         });
     }
 
-    registerEvent = (eventID) => {
-        axios.post('http://localhost:3001/addEvent', {
-            idEVENTS: eventID,
-            loggedInUser: localStorage.getItem('username'),
-        }).then((res) => {
-            console.log(res.status);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
-
     render() {
         if (localStorage.getItem('loggedIn') === null || localStorage.getItem('loggedIn') === false) {
             return (
