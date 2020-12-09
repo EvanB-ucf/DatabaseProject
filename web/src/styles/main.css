@@ -1,5 +1,5 @@
 p  {
-    color: Lime;
+    color: black;
     Font-weight: 800;
 }
 
@@ -9,44 +9,4 @@ p  {
     font-weight: 600;
     font-size: 20px;
     margin-bottom: 4px;
-}
-
-.search {
-   display: flex;
-   margin-right: 10px;
-}
-
-.searchoption {
-    flex-direction: column;
-    margin: 3px;
-}
-
-.searchfilterradio {
-    justify-self: center;
-}
-
-.searchfilter {
-    flex-direction: column;
-    font-weight: 400;
-    align-self: center;
-    justify-self: center;
-}
-
-
-.searchcontent {
-    width: 200px;
-    height: fit-content;
-    border: 2px solid black;
-    align-self: center;
-    resize: none;
-    font-size: smaller;
-}
-
-.searchsubmit {
-    width: relative;
-    height: fit-content;
-    font-size: 9;
-    border-radius: 10px;
-    background-color: #a1aab9;
-    align-self: center;
 }
