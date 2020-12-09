@@ -19,7 +19,7 @@
 
   h1.header {
     text-align: center;
-    color: white; 
+    color: white;
   }
 
   .logo_container img {
@@ -27,6 +27,5 @@
     margin: 0 auto;
     max-width: 320px;
     height: auto;
-    }
-
+  }
 }

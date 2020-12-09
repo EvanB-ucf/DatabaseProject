@@ -1,0 +1,13 @@
+.create {
+  text-align: center;
+}
+
+.create div {
+  display: inline-block;
+  font-family: "Gabriela", serif;
+  color: #fff;
+  font-size: 3.5em;
+  border-radius: 20px;
+  background: rgba(43, 166, 203, 0.5 /* alpha value for background */);
+  padding: 0.5em 0.2em 0.8em 0.5em;
+}

@@ -1,57 +1,21 @@
-import { Link, Redirect } from "react-router-dom";
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/main.css";
-import EventCard from "../component/eventCard";
+import { Row, Col, Nav, Tab } from "react-bootstrap";
 import axios from "axios";
-import MyNavBar from "../component/navbar.jsx";
-import MyTabs from "../component/tabs.jsx";
-//import SearchBar from "../component/searchBar";
+import "../styles/tabs.css";
+import EventCard from "../component/eventCard";
 
-export default class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
+export default class MyTabs extends React.Component {
+  constructor(props, context) {
+    super(props, context);
     this.state = {
-      username: localStorage.getItem("username"),
-      isSuperAdmin: localStorage.getItem("isSuperAdmin"),
+      key: "home",
       eventsUserRegistered: [],
       eventsUserOrganized: [],
     };
 
-    this.determineSuperPowerButton();
     this.fetchEventsRegistered();
     this.fetchEventsOrganized();
   }
-
-  determineSuperPowerButton = () => {
-    const isSuperAdmin = this.state.isSuperAdmin;
-    let button;
-    if (isSuperAdmin === "true") {
-      button = (
-        <div className="navbar-nav mr-auto">
-          {" "}
-          <li className="nav-item">
-            <Link to={"/searchuser"} className="nav-link">
-              Search Users
-            </Link>
-          </li>
-        </div>
-      );
-    } else {
-      button = (
-        <div className="navbar-nav mr-auto">
-          {" "}
-          <li className="nav-item">
-            {" "}
-            <Link to={"/create"} className="nav-link">
-              Create Event
-            </Link>
-          </li>
-        </div>
-      );
-    }
-    return button;
-  };
 
   fetchEventsRegistered = () => {
     axios
@@ -86,13 +50,6 @@ export default class HomePage extends React.Component {
   };
 
   render() {
-    if (
-      localStorage.getItem("loggedIn") === null ||
-      localStorage.getItem("loggedIn") === false
-    ) {
-      return <Redirect to="/login" />;
-    }
-
     let eventUserRegisteredList, eventUserOrganizedList;
     if (this.state.eventsUserRegistered) {
       const eventRegisteredList = this.state.eventsUserRegistered.map(
@@ -135,7 +92,7 @@ export default class HomePage extends React.Component {
         );
       });
       eventUserOrganizedList = (
-        <div>
+        <div className="resultList">
           {" "}
           <ul> {eventResultsList} </ul>{" "}
         </div>
@@ -143,13 +100,30 @@ export default class HomePage extends React.Component {
     }
 
     return (
-      <div>
-        <MyNavBar></MyNavBar>
-
-        <div>
-          <MyTabs></MyTabs>
-        </div>
-      </div>
+      <Tab.Container
+        bg={"light"}
+        id="left-tabs-example"
+        defaultActiveKey="first"
+      >
+        <Row>
+          <Col sm={3}>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="first">Events Registered </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="second">events Organized</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col sm={9}>
+            <Tab.Content>
+              <Tab.Pane eventKey="first">{eventUserRegisteredList}</Tab.Pane>
+              <Tab.Pane eventKey="second">{eventUserOrganizedList}</Tab.Pane>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
     );
   }
 }
