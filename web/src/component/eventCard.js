@@ -63,6 +63,7 @@ export default class EventCard extends React.Component {
         <Card className="card">
           <Card.Header>{this.state.name}</Card.Header>
           <Card.Body>
+            <Card.Title>URL: {this.props.url}</Card.Title>
             <Card.Title>Starts: {startDateParsed}</Card.Title>
             <Card.Title>Ends: {endDateParsed}</Card.Title>
             <Card.Text>Description: {this.state.description}</Card.Text>
