@@ -36,10 +36,9 @@ export default class NavBar extends React.Component {
                 <li className="nav-item">
                   <Link to={"/search"} className="nav-link">Search Events</Link>
                 </li>
-                <li className="nav-item">
-                  <Link to={"/logout"} className="nav-link">Log Out</Link>
-                </li>
               </div>
+              <span className="user">{localStorage.getItem("username")}</span>
+              <Link to={"/logout"} style={{justifySelf: "right"}} className="nav-link">Log Out</Link>
             </nav>
         );
     }

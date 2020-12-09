@@ -5,8 +5,6 @@ import "../styles/main.css";
 import EventCard from "../component/eventCard";
 import NavBar from "../component/navBar.jsx";
 import axios from 'axios';
-import SearchBar from '../component/searchBar.jsx';
-
 
 export default class HomePage extends React.Component {
   constructor(props) {
@@ -98,9 +96,6 @@ export default class HomePage extends React.Component {
     return (
       <div>
         <NavBar></NavBar>
-
-        <SearchBar></SearchBar>
-
         <div>
           <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>
           <div><p>Events Organized</p>{eventUserOrganizedList}<hr /></div>

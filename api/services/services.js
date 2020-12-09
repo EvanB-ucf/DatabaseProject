@@ -479,7 +479,7 @@ async function findEventByCityBetweenDates(city, date){
  * @description Creates a User Registered Event
  */
 module.exports.createRegisteredEvent = async function createRegisteredEvent(idUser, idEvent) {
-  var sql = "INSERT INTO USER_REGISTRATED_EVENT (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
+  var sql = "INSERT INTO USER_REGISTERED_EVENTS (idUser, idEvent) VALUES (\'" + idUser + "\',\'" + idEvent + "\')";
 
   console.log("sql command is trying to create a registered event");
   return customSQL(sql);
@@ -492,7 +492,7 @@ module.exports.createRegisteredEvent = async function createRegisteredEvent(idUs
  * @description Takes the username of a user and uses that to find all events in which the user has registerd in and returns that information as an array
  */
 module.exports.findRegisteredEventForUser = async function findRegisteredEventForUser(username) {
-  var sql = "SELECT * FROM EVENTS INNER JOIN USER_REGISTERED_EVENT ON EVENTS.idEVENTS=USER_REGISTERED_EVENT.idEvent WHERE USER_REGISTERED_EVENT.idUser=(SELECT idUSERS FROM USERS WHERE username=\'" + username + "\')";
+  var sql = "SELECT * FROM EVENTS INNER JOIN USER_REGISTERED_EVENTS ON EVENTS.idEVENTS=USER_REGISTERED_EVENTS.idEvent WHERE USER_REGISTERED_EVENTS.idUser=(SELECT idUSERS FROM USERS WHERE username=\'" + username + "\')";
   
   console.log("sql command is trying to retrieve registered events for user: " + username);
   return customSQL(sql);
@@ -514,6 +514,7 @@ customSQL = (sql) => {
   return new Promise((resolve, reject) => {
     db.connection.query(sql, (err, results, fields) => {
       if (err) return reject(err);
+      console.log("sql command executed successfully");
       return resolve(results);
     });
   });

@@ -1,27 +1,12 @@
 p  {
-    color: Lime;
+    color: black;
     Font-weight: 800;
 }
 
-.search {
-   display: flex;
-   align-self: center;
-}
-
-.searchfilter {
-    flex-direction: column;
-    font-weight: 400;
-    align-self: flex-end;
-}
-
-.searchcontent {
-    width: 200px;
-    border: 2px solid black;
-    resize: none;
-    font-size: smaller;
-}
-
-.searchsubmit {
-    width: relative;
-    font-size: smaller;
+.user {
+    justify-self: right;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 4px;
 }

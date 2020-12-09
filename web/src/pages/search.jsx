@@ -22,15 +22,15 @@ export default class SearchDateCityEvent extends React.Component {
         };
     }
 
-    validateForm = () => {
-        return this.state.eventCity.length > 0;
-    }
+    // validateForm = () => {
+    //     return this.state.eventCity.length > 0;
+    // }
 
     validateUsernameForm = () => {
         return this.state.usernameSearch.length > 0;
     }
 
-    handleDateCitySubmit = (event) => {
+    handleDateSubmit = (event) => {
         event.preventDefault();
         const startDate = this.state.eventStartYear + "-" + this.state.eventStartMonth + "-" + this.state.eventStartDate;
         const endDate = this.state.eventEndYear + "-" + this.state.eventEndMonth + "-" + this.state.eventEndDate;
@@ -38,8 +38,26 @@ export default class SearchDateCityEvent extends React.Component {
         axios.post('http://localhost:3001/search', {
             eventStart: startDate,
             eventEnd: endDate,
+            eventCity: null,
+            loggedInUser: localStorage.getItem('username'),
+        }).then((res) => {
+            this.setState({ eventsFoundFromQuery: res.data.events });
+            this.setState({ searchQueryResults: true });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    handleCitySubmit = (event) => {
+        event.preventDefault();
+        
+        var temp = new Date()
+        const date = temp.getFullYear().toString() +'-' +(temp.getMonth()+1).toString() +'-'+ temp.getDate().toString()
+        axios.post('http://localhost:3001/search', {
+            currentDate: date,
             eventCity: this.state.eventCity,
             loggedInUser: localStorage.getItem('username'),
+        
         }).then((res) => {
             this.setState({ eventsFoundFromQuery: res.data.events });
             this.setState({ searchQueryResults: true });
@@ -63,7 +81,7 @@ export default class SearchDateCityEvent extends React.Component {
             return (
                 <div>
                     <NavBar></NavBar>
-                    <div> <ul> {eventResultsList} </ul> </div>
+                    <div> <ul style={{listStyleType: "none"}}> {eventResultsList} </ul> </div>
                 </div>
             );
         }
@@ -73,7 +91,7 @@ export default class SearchDateCityEvent extends React.Component {
                 <NavBar></NavBar>
                 <div className="Login">
                     <h1 className="header">Search for Events by City and Dates</h1>
-                    <Form onSubmit={this.handleDateCitySubmit}>
+                    <Form onSubmit={this.handleDateSubmit}>
                         <Form.Group size="sm" controlId="eventStartMonth">
                             <Form.Label>Start Month</Form.Label>
                             <Form.Control as="select" onChange={(e) => this.setState({ eventStartMonth: e.target.value })}>
@@ -209,15 +227,21 @@ export default class SearchDateCityEvent extends React.Component {
                             </Form.Control>
                         </Form.Group>
 
-                        <Form.Group size="lg" controlId="eventCity">
+                        <Button block size="lg" type="submit" >Search</Button>
+                    
+                    </Form>
+
+                    <Form onSubmit={this.handleCitySubmit}>
+                         { <Form.Group size="lg" controlId="eventCity">
                             <Form.Label>City</Form.Label>
                             <Form.Control
                                 type="eventCity"
                                 value={this.state.eventCity}
                                 onChange={(e) => this.setState({ eventCity: e.target.value })} />
-                        </Form.Group>
+                        </Form.Group> }
 
-                        <Button block size="lg" type="submit" disabled={!this.validateForm()}>Search</Button>
+                        <Button block size="lg" type="submit" >Search</Button> 
+
                     </Form>
                 </div>
             </div>
