@@ -6,17 +6,31 @@ router.post('/', async (req, res) => {
     console.log(req.body);
 
     try {
-        const eventStart = req.body.eventStart;
-        const eventEnd = req.body.eventEnd;
-        const eventCity = req.body.eventCity;
-        const loggedInUser = req.body.loggedInUser;
+        var locations
+        if(req.body.eventCity != null){
+            const eventCity = req.body.eventCity;
+            const currentDay = req.body.currentDate;
+            const loggedInUser = req.body.loggedInUser;
+
+            console.log(eventCity);
+            console.log(currentDay);
+            const findLocationsSQL = "SELECT * FROM EVENTS e, LOCATION l WHERE e.locationID=l.idLocation AND e.start_date<=\'" + currentDay + "\' AND e.end_date>=\'" + currentDay + "\' AND l.city=\'" + eventCity + "\'"; 
+            locations = await mysql.exportedCustomSQL(findLocationsSQL);
+        }else{
+            const eventStart = req.body.eventStart;
+            const eventEnd = req.body.eventEnd;
+            const loggedInUser = req.body.loggedInUser;
+
+            console.log(eventStart);
+            console.log(eventEnd);
+            const findLocationsSQL = "SELECT * FROM EVENTS e WHERE e.start_date>=\'" + eventStart + "\' AND e.end_date<=\'" + eventEnd + "\' ";
+            locations = await mysql.exportedCustomSQL(findLocationsSQL);
+        }
+        
 
         // All locationIDs - check the location table, collect all the IDs
 
-        console.log(eventStart);
-        console.log(eventEnd);
-        const findLocationsSQL = "SELECT * FROM EVENTS AS e, LOCATION AS l WHERE l.idLocation = e.locationID AND e.start_date>=\'" + eventStart + "\' AND e.end_date<=\'" + eventEnd + "\' AND l.city=\'" + eventCity + "\'";
-        const locations = await mysql.exportedCustomSQL(findLocationsSQL);
+
 
         console.log(locations);
         const events = [];
