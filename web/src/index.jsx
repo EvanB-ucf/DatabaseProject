@@ -9,13 +9,3 @@ ReactDOM.render(
   </BrowserRouter>,
   document.getElementById("main")
 );
-
-/*
-import HomePage from "./pages/main.js";
- within ReactDOM.render(
-  <BrowserRouter>
-    <HomePage />
-  </BrowserRouter>,
-    document.getElementById("main")
-    );
-  */
