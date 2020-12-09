@@ -110,10 +110,7 @@ export default class HomePage extends React.Component {
               >Log Out</button>
             </li>
           </div>
-        
         </nav>
-        
-        
       
         <div>
           <div><p>Events Registered</p>{eventUserRegisteredList}<hr /></div>

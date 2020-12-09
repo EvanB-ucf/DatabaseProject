@@ -5,23 +5,40 @@ p  {
 
 .search {
    display: flex;
-   align-self: center;
+   margin-right: 10px;
+}
+
+.searchoption {
+    flex-direction: column;
+    margin: 3px;
+}
+
+.searchfilterradio {
+    justify-self: center;
 }
 
 .searchfilter {
     flex-direction: column;
     font-weight: 400;
-    align-self: flex-end;
+    align-self: center;
+    justify-self: center;
 }
+
 
 .searchcontent {
     width: 200px;
+    height: fit-content;
     border: 2px solid black;
+    align-self: center;
     resize: none;
     font-size: smaller;
 }
 
 .searchsubmit {
     width: relative;
-    font-size: smaller;
+    height: fit-content;
+    font-size: 9;
+    border-radius: 10px;
+    background-color: #a1aab9;
+    align-self: center;
 }

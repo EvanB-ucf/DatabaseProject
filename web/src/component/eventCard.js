@@ -19,21 +19,18 @@ export default class EventCard extends React.Component {
 
     canRegister() {
         const isSuperAdmin = localStorage.getItem('isSuperAdmin');
-        let button;
         if (isSuperAdmin === 'true') {
-            button = <div />;
+            return <div />;
         } else {
-            <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>
+            return <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>;
         }
-        return button;
     }
 
-    handleUserRegisters = (idEvent) => {
-        const loggedInUser = localStorage.getItem('username');
+    handleUserRegisters = () => {
 
         axios.post('http://localhost:3001/addevent', {
-            username: loggedInUser,
-            eventEnd: this.state.idEVENTS,
+            loggedInUser: localStorage.getItem('username'),
+            idEVENTS: this.state.idEVENTS,
         }).then((res) => {
             if (res.status && res.status === 201) {
                 alert("Congrats you are registered for the event!");
