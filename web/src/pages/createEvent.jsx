@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from "../component/navBar.jsx";
 
 export default class CreateEvent extends React.Component {
     constructor(props) {
@@ -79,6 +80,7 @@ export default class CreateEvent extends React.Component {
         }
         return (
             <div>
+                <NavBar></NavBar>
                 <div className="Login">
                     <h1 className="header">Create an Event</h1>
                     <Form onSubmit={this.handleSubmit}>

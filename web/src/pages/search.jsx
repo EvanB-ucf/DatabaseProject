@@ -3,6 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import EventCard from "../component/eventCard";
+import NavBar from "../component/navBar.jsx";
 
 export default class SearchDateCityEvent extends React.Component {
     constructor(props) {
@@ -71,12 +72,16 @@ export default class SearchDateCityEvent extends React.Component {
                 return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
             });
             return (
-                <div> <ul style={{listStyleType: "none"}}> {eventResultsList} </ul> </div>
+                <div>
+                    <NavBar></NavBar>
+                    <div> <ul style={{listStyleType: "none"}}> {eventResultsList} </ul> </div>
+                </div>
             );
         }
 
         return (
             <div>
+                <NavBar></NavBar>
                 <div className="Login">
                     <h1 className="header">Search for Events by City and Dates</h1>
                     <Form onSubmit={this.handleDateCitySubmit}>
