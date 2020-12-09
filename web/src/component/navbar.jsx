@@ -1,34 +1,49 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Navbar,
-  NavDropdown,
-  Nav,
-  FormControl,
-} from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/main.css";
 
-export default class MyNavbar extends React.Component {
+export default class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSuperAdmin: localStorage.getItem('isSuperAdmin')
+    };
+  }
+
+  logout = () => {
+      localStorage.clear();
+  }
+
+  determineSuperPowerButton = () => {
+    const isSuperAdmin = this.state.isSuperAdmin;
+    let button;
+    if (isSuperAdmin === 'true') {
+      button = <div className="navbar-nav mr-auto"> <li className="nav-item">
+        <Link to={"/searchuser"} className="nav-link">Search Users</Link></li></div>;
+    } else {
+      button = <div className="navbar-nav mr-auto"> <li className="nav-item"> <Link to={"/create"} className="nav-link">Create Event</Link></li></div>;
+    }
+    return button;
+  }
+
   render() {
-    return (
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="/">Home</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="/create">Create Event</Nav.Link>
-          <Nav.Link href="/search">Search Event</Nav.Link>
-        </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-info">Search</Button>
-        </Form>
-        <Button
-          variant="outline-info"
-          onClick={() => this.props.handleLogout()}
-        >
-          Log out
-        </Button>
-      </Navbar>
-    );
+      return (
+          <nav className="navbar navbar-expand navbar-dark bg-dark">
+            <a href="/" className="navbar-brand">Home</a>
+            <div>{this.determineSuperPowerButton()}</div>
+            <div className="navbar-nav mr-auto">
+              <li className="nav-item">
+                <Link to={"/search"} className="nav-link">Search Events</Link>
+              </li>
+            </div>
+            <div className="navbar-nav">
+              <span className="user">{localStorage.getItem("username")}</span>
+              <li className="nav-item">
+                <Link to={"/logout"} className="nav-link">Log Out</Link>
+              </li>
+            </div>
+          </nav>
+      );
   }
 }

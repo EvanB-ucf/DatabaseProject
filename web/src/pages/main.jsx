@@ -5,6 +5,7 @@ import "../styles/main.css";
 import EventCard from "../component/eventCard";
 import NavBar from "../component/navBar.jsx";
 import axios from 'axios';
+import MyTabs from "../component/tabs.jsx";
 
 export default class HomePage extends React.Component {
   constructor(props) {

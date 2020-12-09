@@ -24,9 +24,6 @@ export default class EventCard extends React.Component {
         } else {
             return <Button block size="sm" type="button" variant="warning" style={{ display: 'inlineBlock' }} onClick={this.handleUserRegisters}>Register</Button>;
         }
-
-    }
-    return button;
   }
 
     handleUserRegisters = () => {

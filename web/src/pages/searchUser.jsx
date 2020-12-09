@@ -52,7 +52,7 @@ export default class SearchUsername extends React.Component {
                 return <li key={event.idEVENTS}><EventCard name={event.name} url={event.url} idEVENTS={event.idEVENTS} description={event.description} start_date={event.start_date} end_date={event.end_date} /></li>
             });
             return (
-                <div> <ul> {eventResultsList} </ul> </div>
+                <div><NavBar></NavBar><ul> {eventResultsList} </ul> </div>
             );
         }
 
