@@ -1,0 +1,13 @@
+ul {
+  list-style-type: none;
+}
+
+.myClass ul > li > a {
+  background-color: gray;
+  color: white;
+}
+
+.tab {
+  background-color: #343a40;
+  color: white;
+}

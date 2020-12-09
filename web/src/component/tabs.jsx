@@ -104,10 +104,10 @@ export default class MyTabs extends React.Component {
         <Row>
           <Col sm={3}>
             <Nav variant="pills" className="flex-column">
-              <Nav.Item>
+              <Nav.Item className="tab">
                 <Nav.Link eventKey="first">Events Registered </Nav.Link>
               </Nav.Item>
-              <Nav.Item>
+              <Nav.Item className="tab">
                 <Nav.Link eventKey="second">events Organized</Nav.Link>
               </Nav.Item>
             </Nav>
