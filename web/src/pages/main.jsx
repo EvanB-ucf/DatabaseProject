@@ -69,6 +69,15 @@ export default class HomePage extends React.Component {
       });
   };
 
+  handleLogOut = () => {
+    this.setState({
+      username: "",
+      isSuperAdmin: false,
+      eventsUserRegistered: [],
+      eventsUserOrganized: [],
+    });
+  };
+
   fetchEventsOrganized = () => {
     axios
       .post("http://localhost:3001/searchuser", {
@@ -144,7 +153,7 @@ export default class HomePage extends React.Component {
 
     return (
       <div>
-        <MyNavBar></MyNavBar>
+        <MyNavBar handleLogOut={this.handleLogOut}></MyNavBar>
 
         <div>
           <MyTabs></MyTabs>

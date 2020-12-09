@@ -22,6 +22,12 @@ export default class MyNavbar extends React.Component {
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-info">Search</Button>
         </Form>
+        <Button
+          variant="outline-info"
+          onClick={() => this.props.handleLogout()}
+        >
+          Log out
+        </Button>
       </Navbar>
     );
   }
